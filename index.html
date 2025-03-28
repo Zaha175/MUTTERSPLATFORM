@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mutter Erinnerungsplattform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #e91e63;
+      --primary-light: #ff6090;
+      --primary-dark: #b0003a;
+      --secondary-color: #4a90e2;
+      --text-color: #333;
+      --text-light: #fff;
+      --bg-color: #f5f5f5;
+      --bg-dark: #121212;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-bg-dark: rgba(30, 30, 30, 0.85);
+      --panel-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .dark-mode {
+      --primary-color: #ff4081;
+      --primary-light: #ff79b0;
+      --primary-dark: #c60055;
+      --text-color: #e0e0e0;
+      --bg-color: #121212;
+      --card-bg: rgba(30, 30, 30, 0.85);
+      --panel-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.imgur.com/AkVQK3t.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0.4;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+    
+    .dark-mode::before {
+      opacity: 0.2;
+    }
+    
+    /* Header */
+    header {
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+    
+    /* Main container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* 3D Würfel Container */
+    .cube-container {
+      width: 100%;
+      height: 400px;
+      position: relative;
+      margin-bottom: 30px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--panel-shadow);
+      overflow: hidden;
+    }
+    
+    /* Menu Container */
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .menu-item {
+      padding: 15px 20px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      min-width: 180px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-bottom: 4px solid var(--primary-dark);
+    }
+    
+    .menu-item:hover {
+      transform: translateY(-5px);
+      background-color: var(--primary-light);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .menu-item i {
+      margin-right: 8px;
+    }
+    
+    /* Content area */
+    .content-container {
+      margin-top: 20px;
+    }
+    
+    .content-panel {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--panel-shadow);
+      display: none;
+    }
+    
+    .content-panel.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .content-panel h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    
+    .content-panel p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .gallery-item {
+      flex: 1 0 200px;
+      max-width: calc(33.333% - 10px);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .gallery-caption {
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+    }
+    
+    /* Modal für Vollbildanzeige */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+    
+    .modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      border: 3px solid white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+      border: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .modal-close:hover {
+      background-color: var(--primary-light);
+      transform: rotate(90deg);
+    }
+    
+    .modal-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+    
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+    }
+    
+    /* Responsive Anpassungen */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .menu-item {
+        flex: 1 0 calc(50% - 15px);
+        min-width: unset;
+      }
+      
+      .cube-container {
+        height: 300px;
+      }
+      
+      .gallery-item {
+        max-width: calc(50% - 10px);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .menu-item {
+        flex: 1 0 100%;
+      }
+      
+      .gallery-item {
+        max-width: 100%;
+      }
+      
+      .cube-container {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Erinnerungen an Mutter</h1>
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+  </header>
+  
+  <div class="container">
+    <!-- 3D Würfel mit Erinnerungen -->
+    <div class="cube-container" id="cubeContainer"></div>
+    
+    <!-- Menü mit Kategorien -->
+    <div class="menu-container">
+      <div class="menu-item" data-target="leben">
+        <i class="fas fa-heart"></i> Mutters Leben
+      </div>
+      <div class="menu-item" data-target="app">
+        <i class="fas fa-mobile-alt"></i> MutterApp
+      </div>
+      <div class="menu-item" data-target="kosten">
+        <i class="fas fa-file-invoice-dollar"></i> Mutterkosten
+      </div>
+      <div class="menu-item" data-target="kinder">
+        <i class="fas fa-child"></i> Kinder
+      </div>
+      <div class="menu-item" data-target="hobbys">
+        <i class="fas fa-paint-brush"></i> Hobbys
+      </div>
+      <div class="menu-item" data-target="pflanzen">
+        <i class="fas fa-seedling"></i> Pflanzen
+      </div>
+      <div class="menu-item" data-target="kueche">
+        <i class="fas fa-utensils"></i> Mutters Küche
+      </div>
+      <div class="menu-item" data-target="galerie">
+        <i class="fas fa-images"></i> Bildergalerie
+      </div>
+    </div>
+    
+    <!-- Inhaltsbereich -->
+    <div class="content-container">
+      <!-- Mutters Leben Panel -->
+      <div class="content-panel" id="leben-panel">
+        <h2>Mutters Leben</h2>
+        <p>Hier finden Sie Erinnerungen an besondere Momente im Leben unserer Mutter. Ihre Geschichten, wichtige Ereignisse und Lebensweisheiten.</p>
+        <p>Geboren am 15. März 1940, hat unsere Mutter viele Lebenserfahrungen gesammelt und Weisheiten an uns weitergegeben. Sie war stets eine starke Persönlichkeit, deren Lächeln jeden Raum erhellte.</p>
+        <p>Als junge Frau liebte sie das Tanzen und Singen. Sie erzählte oft von den Sommerfesten in ihrem Heimatdorf und den Traditionen, die sie mit in ihr eigenes Familienleben brachte.</p>
+        <div class="gallery">
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon">
+            <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon">
+            <div class="gallery-caption">Gemeinsame Zeit</div>
+          </div>
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse">
+            <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse">
+            <div class="gallery-caption">Auf der Terrasse</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- MutterApp Panel -->
+      <div class="content-panel" id="app-panel">
+        <h2>MutterApp</h2>
+        <p>Hier finden Sie die MutterApp, mit der Sie die Kosten und Erinnerungen verwalten können.</p>
+        <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTER3D/', '_blank')">
+          <i class="fas fa-cube"></i> 3D Erinnerungen öffnen
+        </button>
+        <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTERAPP/', '_blank')">
+          <i class="fas fa-calculator"></i> Kostenübersicht öffnen
+        </button>
+      </div>
+      
+      <!-- Mutterkosten Panel -->
+      <div class="content-panel" id="kosten-panel">
+        <h2>Mutterkosten</h2>
+        <p>Übersicht über die Kosten im Zusammenhang mit dem Trauerfall.</p>
+        <iframe src="https://zaha175.github.io/MUTTERAPP/" style="width:100%; height:500px; border:none; border-radius:8px;"></iframe>
+      </div>
+      
+      <!-- Kinder Panel -->
+      <div class="content-panel" id="kinder-panel">
+        <h2>Kinder</h2>
+        <p>Erinnerungen an die Zeit mit ihren Kindern und Enkelkindern.</p>
+        <p>Unsere Mutter war stets eine liebevolle und geduldige Person, die für ihre Familie immer Zeit hatte. Die Sonntagnachmittage mit selbstgebackenem Kuchen und Geschichten aus ihrer Jugend sind unvergessliche Erinnerungen.</p>
+        <p>Besonders zu Weihnachten zeigte sich ihre Liebe zur Familie in den sorgfältig ausgewählten Geschenken und den traditionellen Gerichten, die nur sie so zubereiten konnte.</p>
+      </div>
+      
+      <!-- Hobbys Panel -->
+      <div class="content-panel" id="hobbys-panel">
+        <h2>Mutters Hobbys</h2>
+        <p>Die Freizeitaktivitäten und Leidenschaften unserer Mutter.</p>
+        <p>Das Stricken war eine ihrer größten Leidenschaften. Jedes Jahr zu Weihnachten bekamen alle Familienmitglieder selbstgestrickte Socken oder Schals, die mit viel Liebe gemacht wurden.</p>
+        <p>Gartenarbeit war ihr Ausgleich. Besonders stolz war sie auf ihre Rosenbeete und den kleinen Gemüsegarten, aus dem sie frische Zutaten für ihre köstlichen Mahlzeiten erntete.</p>
+        <p>Das Sammeln alter Postkarten gehörte ebenfalls zu ihren Hobbys. Sie hatte eine beeindruckende Sammlung von Postkarten aus der ganzen Welt.</p>
+      </div>
+      
+      <!-- Pflanzen Panel -->
+      <div class="content-panel" id="pflanzen-panel">
+        <h2>Mutters Pflanzen</h2>
+        <p>Die Pflanzen und der Garten, die unserer Mutter so viel bedeutet haben.</p>
+        <p>Ihr Garten war ihre Oase der Ruhe. Dort verbrachte sie viele Stunden damit, ihre Blumen zu pflegen und dem Gezwitscher der Vögel zu lauschen.</p>
+        <p>Besonders ihre Orchideen waren ihr Stolz. Sie hatte ein besonderes Händchen für diese anspruchsvollen Pflanzen und konnte selbst die schwierigsten Arten zum Blühen bringen.</p>
+        <div class="gallery">
+          <div class="gallery-item" data-image="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese">
+            <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese">
+            <div class="gallery-caption">Blumenwiese</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen">
+            <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen">
+            <div class="gallery-caption">Mohnblumen</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Küche Panel -->
+      <div class="content-panel" id="kueche-panel">
+        <h2>Mutters Küche</h2>
+        <p>Die kulinarischen Spezialitäten und Rezepte unserer Mutter.</p>
+        <p>Ihre Apfelstrudel-Rezepte waren in der ganzen Familie berühmt. Der Duft, der aus der Küche kam, wenn sie einen Apfelstrudel backte, ist unvergesslich.</p>
+        <p>Zu besonderen Anlässen bereitete sie traditionelle Familienrezepte zu, die von Generation zu Generation weitergegeben wurden. Besonders ihr Sonntagsbraten war ein Highlight.</p>
+        <p>Obwohl sie die Rezepte aufgeschrieben hat, schmeckt es nie ganz so wie bei ihr. Es war ihre besondere Note und Liebe, die sie in jedes Gericht einfließen ließ, die ihre Küche so besonders machte.</p>
+      </div>
+      
+      <!-- Galerie Panel -->
+      <div class="content-panel" id="galerie-panel">
+        <h2>Bildergalerie</h2>
+        <p>Eine Sammlung von Bildern und Erinnerungen.</p>
+        <div class="gallery">
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse">
+            <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse">
+            <div class="gallery-caption">Auf der Terrasse</div>
+          </div>
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon">
+            <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon">
+            <div class="gallery-caption">Gemeinsame Zeit</div>
+          </div>
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" data-caption="Im Krankenhaus">
+            <img src="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" alt="Im Krankenhaus">
+            <div class="gallery-caption">Im Krankenhaus</div>
+          </div>
+          <div class="gallery-item" data-image="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" data-caption="Zusammen auf der Terrasse">
+            <img src="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" alt="Zusammen auf der Terrasse">
+            <div class="gallery-caption">Auf der Terrasse</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese">
+            <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese">
+            <div class="gallery-caption">Blumenwiese</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/cNOjpnW.jpg" data-caption="Weitere schöne Erinnerung">
+            <img src="https://i.imgur.com/cNOjpnW.jpg" alt="Weitere schöne Erinnerung">
+            <div class="gallery-caption">Blumenwiese im Wald</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen">
+            <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen">
+            <div class="gallery-caption">Mohnblumen</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/NGadeZ4.jpg" data-caption="Besondere Momente">
+            <img src="https://i.imgur.com/NGadeZ4.jpg" alt="Besondere Momente">
+            <div class="gallery-caption">Naturbilder</div>
+          </div>
+          <div class="gallery-item" data-image="https://i.imgur.com/AkVQK3t.jpg" data-caption="Hintergrundbild">
+            <img src="https://i.imgur.com/AkVQK3t.jpg" alt="Hintergrundbild">
+            <div class="gallery-caption">Blumen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal für Vollbildansicht -->
+  <div class="modal" id="imageModal">
+    <button class="modal-close" id="modalClose">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Bild in Vollansicht">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+  
+  <!-- Three.js und OrbitControls für den 3D Würfel -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <script>
+    // Globale Variablen
+    let scene, camera, renderer, controls;
+    let cube, particles;
+    let isAutoRotating = true;
+    
+    // Bildmaterial für die Würfelseiten
+    const images = [
+      {
+        url: 'https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589',
+        caption: 'Erinnerung an Mama auf der Terrasse'
+      },
+      {
+        url: 'https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635',
+        caption: 'Gemeinsame Zeit auf dem Balkon'
+      },
+      {
+        url: 'https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609',
+        caption: 'Im Krankenhaus'
+      },
+      {
+        url: 'https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2',
+        caption: 'Zusammen auf der Terrasse'
+      },
+      {
+        url: 'https://i.imgur.com/UqYfUna.jpg',
+        caption: 'Blumenwiese'
+      },
+      {
+        url: 'https://i.imgur.com/AkVQK3t.jpg',
+        caption: 'Blumen'
+      }
+    ];
+    
+    // Initialize Three.js Scene
+    function initCube() {
+      const container = document.getElementById('cubeContainer');
+      
+      // Scene Setup
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+      
+      // Camera Setup
+      camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.z = 7;
+      
+      // Renderer Setup
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+      
+      // Controls Setup
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      
+      // Add Lighting
+      setupLighting();
+      
+      // Add Background
+      setupBackground();
+      
+      // Add Particles
+      setupParticles();
+      
+      // Create Cube
+      createCube();
+      
+      // Start Animation
+      animate();
+      
+      // Handle Window Resize
+      window.addEventListener('resize', onWindowResize);
+    }
+    
+    function setupLighting() {
+      // Ambient Light - softer overall light
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+      
+      // Directional Light - simulates the sun
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      directionalLight.position.set(10, 10, 10);
+      scene.add(directionalLight);
+      
+      // Add colored accent lights for visual interest
+      const blueLight = new THREE.PointLight(0x0088ff, 1.5, 25);
+      blueLight.position.set(-10, 5, 10);
+      scene.add(blueLight);
+      
+      const pinkLight = new THREE.PointLight(0xff007b, 1.5, 25);
+      pinkLight.position.set(10, -5, -10);
+      scene.add(pinkLight);
+      
+      // Front light to better illuminate the cube faces
+      const frontLight = new THREE.PointLight(0xffffff, 1.5, 25);
+      frontLight.position.set(0, 0, 15);
+      scene.add(frontLight);
+    }
+    
+    function setupBackground() {
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load('https://i.imgur.com/AkVQK3t.jpg', (bgTexture) => {
+        const bgAspect = bgTexture.image.width / bgTexture.image.height;
+        
+        // Large background plane
+        const planeWidth = 80;
+        const planeHeight = planeWidth / bgAspect;
+        
+        const bgGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
+        const bgMaterial = new THREE.MeshBasicMaterial({
+          map: bgTexture,
+          side: THREE.DoubleSide,
+          opacity: 0.2,
+          transparent: true
+        });
+        
+        const backgroundMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+        backgroundMesh.position.set(0, 0, -30);
+        scene.add(backgroundMesh);
+      });
+    }
+    
+    function setupParticles() {
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCnt = 5000;
+      const posArray = new Float32Array(particlesCnt * 3);
+      
+      for (let i = 0; i < particlesCnt * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 60;
+      }
+      
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      
+      const particleTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/Kuntal-Das/textures/main/spikey.png');
+      
+      const particleMaterial = new THREE.PointsMaterial({
+        size: 0.08,
+        map: particleTexture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        color: 0xffaacc
+      });
+      
+      particles = new THREE.Points(particlesGeometry, particleMaterial);
+      particles.position.z = -5;
+      scene.add(particles);
+    }
+    
+    function createCube() {
+      // Create balanced cube geometry
+      const geometry = new THREE.BoxGeometry(6, 6, 6);
+      
+      // Load textures for each side
+      const textureLoader = new THREE.TextureLoader();
+      const materials = [];
+      
+      // Apply images to cube faces
+      for (let i = 0; i < 6; i++) {
+        const texture = textureLoader.load(images[i].url);
+        const material = new THREE.MeshStandardMaterial({
+          map: texture,
+          metalness: 0.2,
+          roughness: 0.5,
+          emissive: 0x333333,
+          emissiveIntensity: 0.2
+        });
+        materials.push(material);
+      }
+      
+      cube = new THREE.Mesh(geometry, materials);
+      cube.rotation.x = 0.2;
+      cube.rotation.y = 0.3;
+      scene.add(cube);
+    }
+    
+    function onWindowResize() {
+      const container = document.getElementById('cubeContainer');
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      // Gentle particle rotation
+      particles.rotation.x += 0.0002;
+      particles.rotation.y += 0.0003;
+      
+      // Auto-rotate cube if enabled
+      if (isAutoRotating) {
+        cube.rotation.y += 0.002;
+      }
+      
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    
+    // Event listeners for menu items
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const target = this.getAttribute('data-target');
+        showPanel(target);
+      });
+    });
+    
+    // Show the selected panel and hide others
+    function showPanel(target) {
+      document.querySelectorAll('.content-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      
+      const targetPanel = document.getElementById(`${target}-panel`);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    }
+    
+    // Image gallery functionality
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const imageSrc = this.getAttribute('data-image');
+        const caption = this.getAttribute('data-caption');
+        
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('modalCaption').textContent = caption;
+        document.getElementById('imageModal').classList.add('active');
+      });
+    });
+    
+    // Close modal
+    document.getElementById('modalClose').addEventListener('click', function() {
+      document.getElementById('imageModal').classList.remove('active');
+    });
+    
+    // Dark Mode Toggle
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      
+      // Update icon
+      const icon = this.querySelector('i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.className = 'fas fa-sun';
+      } else {
+        icon.className = 'fas fa-moon';
+      }
+    });
+    
+    // Initialize cube when page loads
+    window.addEventListener('load', function() {
+      initCube();
+      showPanel('leben'); // Show default panel
+    });
+  </script>
+</body>
+</html>
