@@ -15,8 +15,7 @@
             --text-light: #fff;
             --bg-color: #f5f5f5;
             --bg-dark: #121212;
-            /* --card-bg removed dependency for cube container */
-            --card-bg-default: rgba(255, 255, 255, 0.9); /* Renamed for clarity */
+            --card-bg-default: rgba(255, 255, 255, 0.9);
             --card-bg-dark: rgba(30, 30, 30, 0.85);
             --panel-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             --border-radius-base: 8px;
@@ -28,15 +27,11 @@
             --primary-dark: #c60055;
             --text-color: #e0e0e0;
             --bg-color: #121212;
-            --card-bg-default: var(--card-bg-dark); /* Use dark card bg for panels in dark mode */
+            --card-bg-default: var(--card-bg-dark);
             --panel-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -47,315 +42,82 @@
             overflow-x: hidden;
         }
 
-        /* Background Image Pseudo-element */
         body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://i.imgur.com/AkVQK3t.jpg'); /* [Bild von Blumen] */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            opacity: 0.4;
-            z-index: -1;
-            transition: opacity 0.3s ease;
+            background-size: cover; background-position: center; background-attachment: fixed;
+            opacity: 0.4; z-index: -1; transition: opacity 0.3s ease;
         }
+        .dark-mode::before { opacity: 0.2; }
 
-        .dark-mode::before {
-            opacity: 0.2;
-        }
-
-        /* Header */
         .main-header {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-color); color: var(--text-light); padding: 20px;
+            text-align: center; position: relative; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .main-header h1 { margin: 0; font-size: 2rem; letter-spacing: 1px; margin-bottom: 15px; }
 
-        .main-header h1 {
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        /* Banner Styles */
         #ad-banner {
-            text-align: center;
-            padding: 15px;
-            background-color: rgba(0, 51, 102, 0.8);
-            color: #ffd700;
-            margin: 0 auto 15px auto;
-            max-width: 1200px;
-            border-radius: 5px;
-            border: 1px solid #ffd700;
-            font-size: 1.2rem;
-            font-weight: bold;
-            min-height: 1.5em;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 3s infinite ease-in-out;
+            text-align: center; padding: 15px; background-color: rgba(0, 51, 102, 0.8);
+            color: #ffd700; margin: 0 auto 15px auto; max-width: 1200px; border-radius: 5px;
+            border: 1px solid #ffd700; font-size: 1.2rem; font-weight: bold; min-height: 1.5em;
+            cursor: default; position: relative; overflow: hidden; animation: pulse 3s infinite ease-in-out;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px 0px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.7); }
-            100% { box-shadow: 0 0 10px 0px rgba(255, 215, 0, 0.5); }
-        }
-
-        #ad-banner .text-glow {
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from { text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700; }
-            to { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ff9900; }
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.2em;
-            background-color: #ffd700;
-            margin-left: 2px;
-            animation: blink 1s infinite;
-            vertical-align: bottom;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        /* Dark Mode Banner */
-        body.dark-mode #ad-banner {
-            background-color: rgba(68, 68, 68, 0.8);
-            border-color: #ffd700;
-        }
-
-        body.dark-mode .cursor {
-            background-color: #ffd700;
-        }
-
-        /* Pause animation on hover */
+        @keyframes pulse { 0% { box-shadow: 0 0 10px 0px rgba(255, 215, 0, 0.5); } 50% { box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.7); } 100% { box-shadow: 0 0 10px 0px rgba(255, 215, 0, 0.5); } }
+        #ad-banner .text-glow { animation: textGlow 2s ease-in-out infinite alternate; }
+        @keyframes textGlow { from { text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700; } to { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ff9900; } }
+        .cursor { display: inline-block; width: 3px; height: 1.2em; background-color: #ffd700; margin-left: 2px; animation: blink 1s infinite; vertical-align: bottom; }
+        @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        body.dark-mode #ad-banner { background-color: rgba(68, 68, 68, 0.8); border-color: #ffd700; }
+        body.dark-mode .cursor { background-color: #ffd700; }
         #ad-banner:hover { animation-play-state: paused; }
-        #ad-banner:hover .text-glow,
-        #ad-banner:hover .cursor { animation-play-state: paused; }
+        #ad-banner:hover .text-glow, #ad-banner:hover .cursor { animation-play-state: paused; }
 
-        /* Screen Reader Only Class */
-        .sr-only {
-            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
-        }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
 
-        /* Main container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
 
-        /* 3D Cube Container */
         .cube-container {
-            width: 100%;
-            height: 400px;
-            position: relative;
-            margin-bottom: 30px;
-            /* --- MODIFIED BACKGROUND --- */
-            /* Always use a dark, semi-transparent background for particle visibility */
-            background-color: rgba(10, 10, 20, 0.7); /* Dark blueish tint, adjust as needed */
-            border-radius: var(--border-radius-base);
-            box-shadow: var(--panel-shadow); /* Use panel shadow for consistency */
-            overflow: hidden;
+            width: 100%; height: 400px; position: relative; margin-bottom: 30px;
+            background-color: rgba(10, 10, 20, 0.7); /* Fixed dark background */
+            border-radius: var(--border-radius-base); box-shadow: var(--panel-shadow); overflow: hidden;
+            cursor: grab; /* Indicate draggable */
         }
-        /* Ensure canvas within cube container is focusable and sized correctly */
-        .cube-container canvas {
-            display: block;
-            width: 100% !important;
-            height: 100% !important;
-            outline: none;
-        }
+        .cube-container:active { cursor: grabbing; } /* Indicate grabbing */
+        .cube-container canvas { display: block; width: 100% !important; height: 100% !important; outline: none; }
 
+        .menu-navigation { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .menu-item { padding: 15px 20px; background-color: var(--primary-color); color: white; border-radius: var(--border-radius-base); cursor: pointer; font-weight: bold; text-align: center; min-width: 180px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; border: none; border-bottom: 4px solid var(--primary-dark); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+        .menu-item:hover { transform: translateY(-5px); background-color: var(--primary-light); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); }
+        .menu-item i { margin-right: 8px; }
 
-        /* Menu Container */
-        .menu-navigation {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+        .content-container { margin-top: 20px; }
+        .content-panel { background-color: var(--card-bg-default); border-radius: var(--border-radius-base); padding: 25px; margin-bottom: 25px; box-shadow: var(--panel-shadow); display: none; }
+        .content-panel.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .content-panel h2 { color: var(--primary-color); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-light); font-size: 1.8rem; }
+        .content-panel p { margin-bottom: 15px; line-height: 1.7; }
 
-        .menu-item {
-            padding: 15px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: var(--border-radius-base);
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
-            min-width: 180px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: none;
-            border-bottom: 4px solid var(--primary-dark);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+        .gallery-item { flex: 1 1 200px; max-width: calc(33.333% - 10px); border-radius: var(--border-radius-base); overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: all 0.3s ease; background-color: var(--card-bg-default); position: relative; }
+        .gallery-item:hover { transform: scale(1.05); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); }
+        .gallery-item img { width: 100%; height: 200px; object-fit: cover; display: block; }
+        .gallery-caption { padding: 10px; background-color: rgba(0, 0, 0, 0.7); color: white; text-align: center; font-size: 0.9rem; position: absolute; bottom: 0; left: 0; width: 100%; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .gallery-item:hover .gallery-caption { opacity: 1; }
 
-        .menu-item:hover {
-            transform: translateY(-5px);
-            background-color: var(--primary-light);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        }
+        .iframe-container { margin-top: 20px; margin-bottom: 20px; position: relative; overflow: hidden; width: 100%; padding-top: 56.25%; border-radius: var(--border-radius-base); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
 
-        .menu-item i {
-            margin-right: 8px;
-        }
-
-        /* Content area */
-        .content-container {
-            margin-top: 20px;
-        }
-
-        /* Content Panels use default card background */
-        .content-panel {
-            background-color: var(--card-bg-default); /* Use default card bg variable */
-            border-radius: var(--border-radius-base);
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--panel-shadow);
-            display: none;
-        }
-
-        .content-panel.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .content-panel h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-light);
-            font-size: 1.8rem;
-        }
-
-        .content-panel p {
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-
-        /* Gallery */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .gallery-item {
-            flex: 1 1 200px;
-            max-width: calc(33.333% - 10px);
-            border-radius: var(--border-radius-base);
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: var(--card-bg-default); /* Use default card bg */
-            position: relative;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .gallery-caption {
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            text-align: center;
-            font-size: 0.9rem;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .gallery-item:hover .gallery-caption {
-             opacity: 1;
-        }
-
-        /* Iframe Styling */
-        .iframe-container {
-             margin-top: 20px;
-             margin-bottom: 20px;
-             position: relative;
-             overflow: hidden;
-             width: 100%;
-             padding-top: 56.25%; /* 16:9 Aspect Ratio */
-             border-radius: var(--border-radius-base);
-             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .iframe-container iframe {
-             position: absolute;
-             top: 0;
-             left: 0;
-             bottom: 0;
-             right: 0;
-             width: 100%;
-             height: 100%;
-             border: none;
-        }
-
-        /* Modal für Vollbildanzeige */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); display: flex;
-            justify-content: center; align-items: center; z-index: 1000;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0s 0.3s linear;
-        }
-
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s linear; }
         .modal.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
-
         .modal-content { max-width: 90%; max-height: 90%; position: relative; display: flex; justify-content: center; align-items: center; }
         .modal-content img { display: block; max-width: 100%; max-height: calc(90vh - 80px); border: 3px solid white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); border-radius: 4px; }
         .modal-close { position: absolute; top: 15px; right: 15px; background-color: var(--primary-color); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.5rem; border: none; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; z-index: 1001; }
         .modal-close:hover { background-color: var(--primary-light); transform: rotate(90deg); }
         .modal-caption { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; max-width: 80%; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px 20px; text-align: center; border-radius: 4px; font-size: 1rem; }
 
-        /* Dark Mode Toggle */
         .theme-toggle { position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; transition: transform 0.3s ease; z-index: 10; padding: 5px; }
         .theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
 
-        /* Responsive Anpassungen */
         @media (max-width: 992px) { .gallery-item { max-width: calc(50% - 10px); } }
         @media (max-width: 768px) { .main-header h1 { font-size: 1.8rem; } .menu-item { flex-basis: calc(50% - 10px); min-width: unset; } .cube-container { height: 350px; } .content-panel h2 { font-size: 1.6rem; } }
         @media (max-width: 480px) { .main-header h1 { font-size: 1.5rem; } .theme-toggle { font-size: 1.3rem; top: 18px; right: 10px; } .menu-item { flex-basis: 100%; } .gallery-item { max-width: 100%; } .cube-container { height: 300px; } .content-panel { padding: 20px; } .modal-caption { font-size: 0.9rem; padding: 8px 15px; } }
@@ -379,30 +141,14 @@
         </div>
 
         <nav class="menu-navigation" aria-label="Hauptnavigation">
-            <button class="menu-item" data-target="leben">
-                <i class="fas fa-heart" aria-hidden="true"></i> Mutters Leben
-            </button>
-            <button class="menu-item" data-target="app">
-                <i class="fas fa-mobile-alt" aria-hidden="true"></i> MutterApp
-            </button>
-            <button class="menu-item" data-target="kosten">
-                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Mutterkosten
-            </button>
-            <button class="menu-item" data-target="kinder">
-                <i class="fas fa-child" aria-hidden="true"></i> Kinder
-            </button>
-            <button class="menu-item" data-target="hobbys">
-                <i class="fas fa-paint-brush" aria-hidden="true"></i> Hobbys
-            </button>
-            <button class="menu-item" data-target="pflanzen">
-                <i class="fas fa-seedling" aria-hidden="true"></i> Pflanzen
-            </button>
-            <button class="menu-item" data-target="kueche">
-                <i class="fas fa-utensils" aria-hidden="true"></i> Mutters Küche
-            </button>
-            <button class="menu-item" data-target="galerie">
-                <i class="fas fa-images" aria-hidden="true"></i> Bildergalerie
-            </button>
+            <button class="menu-item" data-target="leben"> <i class="fas fa-heart" aria-hidden="true"></i> Mutters Leben </button>
+            <button class="menu-item" data-target="app"> <i class="fas fa-mobile-alt" aria-hidden="true"></i> MutterApp </button>
+            <button class="menu-item" data-target="kosten"> <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Mutterkosten </button>
+            <button class="menu-item" data-target="kinder"> <i class="fas fa-child" aria-hidden="true"></i> Kinder </button>
+            <button class="menu-item" data-target="hobbys"> <i class="fas fa-paint-brush" aria-hidden="true"></i> Hobbys </button>
+            <button class="menu-item" data-target="pflanzen"> <i class="fas fa-seedling" aria-hidden="true"></i> Pflanzen </button>
+            <button class="menu-item" data-target="kueche"> <i class="fas fa-utensils" aria-hidden="true"></i> Mutters Küche </button>
+            <button class="menu-item" data-target="galerie"> <i class="fas fa-images" aria-hidden="true"></i> Bildergalerie </button>
         </nav>
 
         <main class="content-container">
@@ -413,18 +159,9 @@
                 <p>Geboren am 03. Mai 1935 in Mediasch, Siebenbürgen, hat unsere Mutter viele Lebenserfahrungen gesammelt und Weisheiten an uns weitergegeben. Sie war stets eine starke Persönlichkeit, deren Lächeln jeden Raum erhellte.</p>
                 <p>Als junge Frau liebte sie das Tanzen und Singen. Sie erzählte oft von ihrer Kindheit in ihrer Heimatstadt Mediasch und den Traditionen, die sie mit in ihr eigenes Familienleben brachte.</p>
                 <div class="gallery">
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon">
-                        <div class="gallery-caption">Gemeinsame Zeit</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse">
-                        <div class="gallery-caption">Auf der Terrasse</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/ehGFCT0.jpg" data-caption="Blumenwiese">
-                        <img src="https://i.imgur.com/ehGFCT0.jpg" alt="Blumenwiese">
-                        <div class="gallery-caption">Blumenwiese</div>
-                    </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon"> <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon"> <div class="gallery-caption">Gemeinsame Zeit</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse"> <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse"> <div class="gallery-caption">Auf der Terrasse</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/ehGFCT0.jpg" data-caption="Blumenwiese"> <img src="https://i.imgur.com/ehGFCT0.jpg" alt="Blumenwiese"> <div class="gallery-caption">Blumenwiese</div> </div>
                 </div>
             </section>
 
@@ -432,18 +169,11 @@
             <section class="content-panel" id="app-panel" aria-labelledby="app-heading">
                 <h2 id="app-heading">MutterApp</h2>
                  <p>Hier finden Sie Verlinkungen zu weiteren Seiten mit 3D-Erinnerungen und der Kostenübersicht.</p>
-                 
-                 <div class="iframe-container">
-                     <iframe src="https://zaha175.github.io/MUTTER3D/" title="Mutter 3D Erinnerungen" loading="lazy"></iframe>
-                 </div>
+                 <div class="iframe-container"> <iframe src="https://zaha175.github.io/MUTTER3D/" title="Mutter 3D Erinnerungen" loading="lazy"></iframe> </div>
                  <p>Entdecken Sie interaktive 3D-Modelle oder verwalten Sie Kosten.</p>
                  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
-                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTER3D/', '_blank')">
-                        <i class="fas fa-cube" aria-hidden="true"></i> 3D Erinnerungen öffnen
-                    </button>
-                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTERAPP/', '_blank')">
-                        <i class="fas fa-calculator" aria-hidden="true"></i> Kostenübersicht öffnen
-                    </button>
+                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTER3D/', '_blank')"> <i class="fas fa-cube" aria-hidden="true"></i> 3D Erinnerungen öffnen </button>
+                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTERAPP/', '_blank')"> <i class="fas fa-calculator" aria-hidden="true"></i> Kostenübersicht öffnen </button>
                  </div>
             </section>
 
@@ -451,18 +181,10 @@
             <section class="content-panel" id="kosten-panel" aria-labelledby="kosten-heading">
                 <h2 id="kosten-heading">Mutterkosten</h2>
                 <p>Übersicht über die Kosten im Zusammenhang mit dem Trauerfall. Nutzen Sie die eingebettete Anwendung oder öffnen Sie sie in einem neuen Tab.</p>
-                 
-                 <div class="iframe-container">
-                    <iframe src="https://zaha175.github.io/MUTTERAPP/" title="Mutter Kostenübersicht" loading="lazy"></iframe>
-                 </div>
+                 <div class="iframe-container"> <iframe src="https://zaha175.github.io/MUTTERAPP/" title="Mutter Kostenübersicht" loading="lazy"></iframe> </div>
                  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
-                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTERAPP/', '_blank')">
-                        <i class="fas fa-calculator" aria-hidden="true"></i> Kostenübersicht öffnen
-                    </button>
-                    
-                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTER3D/', '_blank')">
-                        <i class="fas fa-cube" aria-hidden="true"></i> 3D Erinnerungen öffnen
-                    </button>
+                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTERAPP/', '_blank')"> <i class="fas fa-calculator" aria-hidden="true"></i> Kostenübersicht öffnen </button>
+                    <button class="menu-item" onclick="window.open('https://zaha175.github.io/MUTTER3D/', '_blank')"> <i class="fas fa-cube" aria-hidden="true"></i> 3D Erinnerungen öffnen </button>
                  </div>
             </section>
 
@@ -490,14 +212,8 @@
                 <p>Ihr Garten war ihre Oase der Ruhe. Dort verbrachte sie viele Stunden damit, ihre Blumen zu pflegen und dem Gezwitscher der Vögel zu lauschen.</p>
                 <p>Besonders ihre Orchideen waren ihr Stolz. Sie hatte ein besonderes Händchen für diese anspruchsvollen Pflanzen und konnte selbst die schwierigsten Arten zum Blühen bringen.</p>
                 <div class="gallery">
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese">
-                        <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese">
-                        <div class="gallery-caption">Blumenwiese</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen">
-                        <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen">
-                        <div class="gallery-caption">Mohnblumen</div>
-                    </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese"> <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese"> <div class="gallery-caption">Blumenwiese</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen"> <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen"> <div class="gallery-caption">Mohnblumen</div> </div>
                 </div>
             </section>
 
@@ -515,42 +231,15 @@
                 <h2 id="galerie-heading">Bildergalerie</h2>
                 <p>Eine Sammlung von Bildern und Erinnerungen.</p>
                 <div class="gallery">
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse">
-                        <div class="gallery-caption">Auf der Terrasse</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon">
-                        <div class="gallery-caption">Gemeinsame Zeit</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" data-caption="Im Krankenhaus">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" alt="Im Krankenhaus">
-                        <div class="gallery-caption">Im Krankenhaus</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" data-caption="Zusammen auf der Terrasse">
-                        <img src="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" alt="Zusammen auf der Terrasse">
-                        <div class="gallery-caption">Auf der Terrasse</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese">
-                        <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese">
-                        <div class="gallery-caption">Blumenwiese</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/cNOjpnW.jpg" data-caption="Weitere schöne Erinnerung">
-                        <img src="https://i.imgur.com/cNOjpnW.jpg" alt="Weitere schöne Erinnerung">
-                        <div class="gallery-caption">Blumenwiese im Wald</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen">
-                        <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen">
-                        <div class="gallery-caption">Mohnblumen</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/ehGFCT0.jpg" data-caption="Besondere Momente">
-                        <img src="https://i.imgur.com/ehGFCT0.jpg" alt="Besondere Momente">
-                        <div class="gallery-caption">Naturbilder</div>
-                    </div>
-                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/AkVQK3t.jpg" data-caption="Hintergrundbild">
-                        <img src="https://i.imgur.com/AkVQK3t.jpg" alt="Hintergrundbild">
-                        <div class="gallery-caption">Blumen</div>
-                    </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" data-caption="Erinnerung an Mama auf der Terrasse"> <img src="https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589" alt="Erinnerung an Mama auf der Terrasse"> <div class="gallery-caption">Auf der Terrasse</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" data-caption="Gemeinsame Zeit auf dem Balkon"> <img src="https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635" alt="Gemeinsame Zeit auf dem Balkon"> <div class="gallery-caption">Gemeinsame Zeit</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" data-caption="Im Krankenhaus"> <img src="https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609" alt="Im Krankenhaus"> <div class="gallery-caption">Im Krankenhaus</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" data-caption="Zusammen auf der Terrasse"> <img src="https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2" alt="Zusammen auf der Terrasse"> <div class="gallery-caption">Auf der Terrasse</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/UqYfUna.jpg" data-caption="Blumenwiese"> <img src="https://i.imgur.com/UqYfUna.jpg" alt="Blumenwiese"> <div class="gallery-caption">Blumenwiese</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/cNOjpnW.jpg" data-caption="Weitere schöne Erinnerung"> <img src="https://i.imgur.com/cNOjpnW.jpg" alt="Weitere schöne Erinnerung"> <div class="gallery-caption">Blumenwiese im Wald</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/VyZyMie.jpg" data-caption="Mohnblumen"> <img src="https://i.imgur.com/VyZyMie.jpg" alt="Mohnblumen"> <div class="gallery-caption">Mohnblumen</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/ehGFCT0.jpg" data-caption="Besondere Momente"> <img src="https://i.imgur.com/ehGFCT0.jpg" alt="Besondere Momente"> <div class="gallery-caption">Naturbilder</div> </div>
+                    <div class="gallery-item" tabindex="0" role="button" data-src="https://i.imgur.com/AkVQK3t.jpg" data-caption="Hintergrundbild"> <img src="https://i.imgur.com/AkVQK3t.jpg" alt="Hintergrundbild"> <div class="gallery-caption">Blumen</div> </div>
                 </div>
             </section>
         </main>
@@ -578,7 +267,7 @@
             'use strict';
 
             // --- DOM Element Caching ---
-            const DOM = {
+            const DOM = { /* ... (DOM elements as before) ... */
                 body: document.body,
                 header: document.querySelector('.main-header'),
                 themeToggleButton: document.getElementById('themeToggle'),
@@ -594,27 +283,30 @@
                 modalImage: document.getElementById('modalImage'),
                 modalCaption: document.getElementById('modalCaption'),
                 modalCloseButton: document.getElementById('modalClose'),
-            };
+             };
 
             // --- Global Variables (Three.js) ---
             let scene, camera, renderer, controls;
             let cube, particles;
             let isAutoRotating = true;
             let animationFrameId;
+            let raycaster = new THREE.Raycaster(); // Initialize Raycaster
+            let mouse = new THREE.Vector2(); // Initialize mouse vector
+            let autoRotateTimeoutId = null; // Timeout ID for resuming rotation
 
             // --- Cube Images ---
-            const images = [
+            const images = [ /* ... (images array as before) ... */
                 { url: 'https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589', caption: 'Erinnerung an Mama auf der Terrasse' },
                 { url: 'https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635', caption: 'Gemeinsame Zeit auf dem Balkon' },
                 { url: 'https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609', caption: 'Im Krankenhaus' },
                 { url: 'https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2', caption: 'Zusammen auf der Terrasse' },
                 { url: 'https://i.imgur.com/UqYfUna.jpg', caption: 'Blumenwiese' },
                 { url: 'https://i.imgur.com/AkVQK3t.jpg', caption: 'Blumen' }
-            ];
+             ];
 
             // --- Banner Typing Effect ---
             let currentTypewriterCancel = null;
-            function typeWriter(textElement, cursorElement, text, speed = 50, eraseDelay = 3000) {
+            function typeWriter(textElement, cursorElement, text, speed = 50, eraseDelay = 3000) { /* ... (typewriter function as before) ... */
                 let charIndex = 0;
                 let timeoutId;
                 let isCancelled = false;
@@ -645,16 +337,16 @@
                     clearTimeout(timeoutId);
                     cursorElement.style.display = "none";
                 };
-            }
+             }
             const adMessages = [ "Du warst die beste Mutter und Oma aller Zeiten, wir werden dich nie vergessen!", "In unseren Herzen bleibst du für immer!", "Deine Liebe und Wärme begleiten uns jeden Tag!", "Wir denken in Liebe an dich!", "Danke für alles, was du uns gegeben hast!" ];
             let currentAdIndex = 0;
-            function nextText() {
+            function nextText() { /* ... (nextText function as before) ... */
                 if (currentTypewriterCancel) { currentTypewriterCancel(); }
                 currentAdIndex = (currentAdIndex + 1) % adMessages.length;
                 if (DOM.textGlowElement && DOM.cursorElement) {
                     currentTypewriterCancel = typeWriter(DOM.textGlowElement, DOM.cursorElement, adMessages[currentAdIndex], 60, 4000);
                 }
-            }
+             }
 
              // --- Three.js Initialization ---
             function initCube() {
@@ -662,11 +354,12 @@
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(75, DOM.cubeContainer.clientWidth / DOM.cubeContainer.clientHeight, 0.1, 1000);
                 camera.position.z = 8;
-                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true is important for transparency over CSS bg
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 renderer.setSize(DOM.cubeContainer.clientWidth, DOM.cubeContainer.clientHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 DOM.cubeContainer.appendChild(renderer.domElement);
-                renderer.domElement.tabIndex = -1;
+                renderer.domElement.tabIndex = -1; // Make canvas focusable
+
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
@@ -674,15 +367,69 @@
                 controls.minDistance = 5;
                 controls.maxDistance = 20;
                 controls.maxPolarAngle = Math.PI / 1.8;
-                controls.addEventListener('start', () => { isAutoRotating = false; });
+
+                // --- MODIFIED Rotation Control ---
+                // Stop auto-rotation on user interaction start
+                controls.addEventListener('start', () => {
+                    isAutoRotating = false;
+                    clearTimeout(autoRotateTimeoutId); // Clear any pending resume timeout
+                });
+                // Resume auto-rotation after a delay when interaction stops
+                controls.addEventListener('end', () => {
+                    resumeAutoRotationAfterDelay();
+                });
+                // --- End MODIFIED Rotation Control ---
+
                 setupLighting();
-                setupParticles(); // Particles should now be visible over the dark CSS background
+                setupParticles();
                 createCube();
                 animate();
+
+                // --- ADDED Click Listener for Raycasting ---
+                renderer.domElement.addEventListener('click', onCanvasClick, false);
+
                 window.addEventListener('resize', onWindowResize);
             }
 
-            function setupLighting() {
+            // --- ADDED Function to resume rotation ---
+            function resumeAutoRotationAfterDelay(delay = 3000) { // 3 second delay
+                 clearTimeout(autoRotateTimeoutId); // Clear previous timeout if any
+                 autoRotateTimeoutId = setTimeout(() => {
+                     isAutoRotating = true;
+                 }, delay);
+            }
+
+            // --- ADDED Click Handler with Raycasting ---
+            function onCanvasClick(event) {
+                if (!cube || !camera || !renderer) return; // Ensure objects exist
+
+                // Calculate mouse position in normalized device coordinates (-1 to +1)
+                const rect = renderer.domElement.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                // Update the picking ray with the camera and mouse position
+                raycaster.setFromCamera(mouse, camera);
+
+                // Calculate objects intersecting the picking ray
+                const intersects = raycaster.intersectObject(cube);
+
+                if (intersects.length > 0) {
+                    // Check if a face was actually clicked (and has a materialIndex)
+                    if (intersects[0].face && intersects[0].face.materialIndex !== undefined) {
+                        const clickedMaterialIndex = intersects[0].face.materialIndex;
+
+                        // Ensure the index is valid for the images array
+                        if (clickedMaterialIndex >= 0 && clickedMaterialIndex < images.length) {
+                            const imageData = images[clickedMaterialIndex];
+                            openModal(imageData.url, imageData.caption);
+                        }
+                    }
+                }
+            }
+
+
+            function setupLighting() { /* ... (lighting setup as before) ... */
                 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
                 scene.add(ambientLight);
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
@@ -691,31 +438,21 @@
                  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
                  hemiLight.position.set(0, 20, 0);
                  scene.add(hemiLight);
-            }
+             }
 
-            function setupParticles() {
+            function setupParticles() { /* ... (particle setup as before) ... */
                 const particlesGeometry = new THREE.BufferGeometry();
                 const particlesCnt = 6000;
                 const posArray = new Float32Array(particlesCnt * 3);
-                for (let i = 0; i < particlesCnt * 3; i++) {
-                    posArray[i] = (Math.random() - 0.5) * 80;
-                }
+                for (let i = 0; i < particlesCnt * 3; i++) { posArray[i] = (Math.random() - 0.5) * 80; }
                 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-                // Particle color remains pink, should contrast with the dark container background
-                const particleMaterial = new THREE.PointsMaterial({
-                    size: 0.06,
-                    color: 0xffc0cb, // Soft pink particles
-                    transparent: true,
-                    blending: THREE.AdditiveBlending,
-                    depthWrite: false,
-                    sizeAttenuation: true
-                });
+                const particleMaterial = new THREE.PointsMaterial({ size: 0.06, color: 0xffc0cb, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true });
                 particles = new THREE.Points(particlesGeometry, particleMaterial);
                 particles.position.z = -10;
                 scene.add(particles);
-            }
+             }
 
-            function createCube() {
+            function createCube() { /* ... (cube creation as before) ... */
                 const geometry = new THREE.BoxGeometry(5, 5, 5);
                 const textureLoader = new THREE.TextureLoader();
                 const materials = [];
@@ -727,9 +464,9 @@
                 });
                 cube = new THREE.Mesh(geometry, materials);
                 scene.add(cube);
-            }
+             }
 
-            function onWindowResize() {
+            function onWindowResize() { /* ... (resize handler as before) ... */
                 if (!DOM.cubeContainer || !camera || !renderer) return;
                 const width = DOM.cubeContainer.clientWidth;
                 const height = DOM.cubeContainer.clientHeight;
@@ -737,9 +474,9 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize(width, height);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            }
+             }
 
-            function animate() {
+            function animate() { /* ... (animation loop as before, rotation logic unchanged) ... */
                 animationFrameId = requestAnimationFrame(animate);
                 if (particles) { particles.rotation.y += 0.0002; }
                 if (isAutoRotating && cube) {
@@ -748,10 +485,10 @@
                 }
                 if (controls) { controls.update(); }
                 if (renderer && scene && camera) { renderer.render(scene, camera); }
-            }
+             }
 
             // --- UI Interaction Functions ---
-            function showPanel(targetId) {
+            function showPanel(targetId) { /* ... (showPanel as before) ... */
                 DOM.contentPanels.forEach(panel => {
                     panel.classList.remove('active');
                     panel.setAttribute('aria-hidden', 'true');
@@ -761,8 +498,8 @@
                     targetPanel.classList.add('active');
                     targetPanel.setAttribute('aria-hidden', 'false');
                 }
-            }
-            function openModal(src, caption) {
+             }
+            function openModal(src, caption) { /* ... (openModal as before, including isAutoRotating = false) ... */
                 if (!DOM.modal || !DOM.modalImage || !DOM.modalCaption) return;
                 DOM.modalImage.src = src;
                 DOM.modalImage.alt = caption || "Bild in Vollansicht";
@@ -770,9 +507,10 @@
                 DOM.modal.classList.add('active');
                 DOM.modal.setAttribute('aria-hidden', 'false');
                 DOM.modalCloseButton?.focus();
-                 isAutoRotating = false; // Pause cube rotation
-            }
-            function closeModal() {
+                 isAutoRotating = false; // Pause cube rotation when modal is open
+                 clearTimeout(autoRotateTimeoutId); // Prevent resuming rotation while modal is open
+             }
+            function closeModal() { /* ... (closeModal as before) ... */
                 if (!DOM.modal) return;
                 DOM.modal.classList.remove('active');
                 DOM.modal.setAttribute('aria-hidden', 'true');
@@ -780,11 +518,12 @@
                 DOM.modalCaption.textContent = "";
                 const canvas = DOM.cubeContainer?.querySelector('canvas');
                 if (canvas) { canvas.focus(); }
-                 // isAutoRotating = true; // Optional: Resume rotation
-            }
+                // Rotation resumes via the 'end' event listener delay, no need to force it here
+                // resumeAutoRotationAfterDelay(); // Optional: uncomment to immediately try resuming rotation on close
+             }
 
             // --- Event Listeners Setup ---
-            function setupEventListeners() {
+            function setupEventListeners() { /* ... (event listeners setup as before) ... */
                 // Theme Toggle
                 if (DOM.themeToggleButton) {
                     DOM.themeToggleButton.addEventListener('click', () => {
@@ -792,7 +531,6 @@
                         const isDarkMode = DOM.body.classList.contains('dark-mode');
                         if (DOM.themeToggleIcon) { DOM.themeToggleIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon'; }
                         try { localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); } catch (e) { console.warn("Could not save theme preference."); }
-                        // Note: Cube container background is now independent of theme
                     });
                 }
                 // Menu Item Clicks
@@ -814,11 +552,11 @@
                     DOM.adBanner.addEventListener("mouseenter", () => { DOM.adBanner.style.animationPlayState = "paused"; DOM.textGlowElement.style.animationPlayState = "paused"; DOM.cursorElement.style.animationPlayState = "paused"; });
                     DOM.adBanner.addEventListener("mouseleave", () => { DOM.adBanner.style.animationPlayState = "running"; DOM.textGlowElement.style.animationPlayState = "running"; DOM.cursorElement.style.animationPlayState = "running"; });
                 }
-            }
+             }
 
             // --- Initialization ---
-            function initializePage() {
-                 // Apply saved theme (affects panels, not cube container bg)
+            function initializePage() { /* ... (initialization as before) ... */
+                 // Apply saved theme
                  try {
                      const savedTheme = localStorage.getItem('theme');
                      if (savedTheme === 'dark') {
@@ -840,7 +578,7 @@
                 } else {
                     console.warn("Banner text or cursor element not found.");
                 }
-            }
+             }
 
             // --- Run Initialization on Load ---
             if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initializePage); } else { initializePage(); }
