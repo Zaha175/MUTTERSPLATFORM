@@ -80,9 +80,9 @@
             width: 100%; height: 400px; position: relative; margin-bottom: 30px;
             background-color: rgba(10, 10, 20, 0.7); /* Fixed dark background */
             border-radius: var(--border-radius-base); box-shadow: var(--panel-shadow); overflow: hidden;
-            cursor: grab; /* Indicate draggable */
+            cursor: grab;
         }
-        .cube-container:active { cursor: grabbing; } /* Indicate grabbing */
+        .cube-container:active { cursor: grabbing; }
         .cube-container canvas { display: block; width: 100% !important; height: 100% !important; outline: none; }
 
         .menu-navigation { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px; }
@@ -106,6 +106,19 @@
 
         .iframe-container { margin-top: 20px; margin-bottom: 20px; position: relative; overflow: hidden; width: 100%; padding-top: 56.25%; border-radius: var(--border-radius-base); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .iframe-container iframe { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
+
+        /* --- ADDED Video Styling --- */
+        .video-responsive {
+            width: 100%;
+            max-width: 640px; /* Adjust max width as needed */
+            height: auto;
+            display: block;
+            margin: 20px auto; /* Center the video */
+            border-radius: var(--border-radius-base);
+            background-color: #000; /* Black background for potential letterboxing */
+            box-shadow: var(--panel-shadow);
+        }
+        /* --- End ADDED Video Styling --- */
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s linear; }
         .modal.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
@@ -156,6 +169,12 @@
             <section class="content-panel" id="leben-panel" aria-labelledby="leben-heading">
                 <h2 id="leben-heading">Mutters Leben</h2>
                 <p>Hier finden Sie Erinnerungen an besondere Momente im Leben unserer Mutter. Ihre Geschichten, wichtige Ereignisse und Lebensweisheiten.</p>
+
+                
+                <video src="Gabriela.mp4" controls class="video-responsive" preload="metadata">
+                    Ihr Browser unterstützt das Video-Tag nicht. Hier ist ein <a href="Gabriela.mp4">Link zum Video</a> stattdessen.
+                </video>
+
                 <p>Geboren am 03. Mai 1935 in Mediasch, Siebenbürgen, hat unsere Mutter viele Lebenserfahrungen gesammelt und Weisheiten an uns weitergegeben. Sie war stets eine starke Persönlichkeit, deren Lächeln jeden Raum erhellte.</p>
                 <p>Als junge Frau liebte sie das Tanzen und Singen. Sie erzählte oft von ihrer Kindheit in ihrer Heimatstadt Mediasch und den Traditionen, die sie mit in ihr eigenes Familienleben brachte.</p>
                 <div class="gallery">
@@ -209,6 +228,12 @@
             <section class="content-panel" id="pflanzen-panel" aria-labelledby="pflanzen-heading">
                 <h2 id="pflanzen-heading">Mutters Pflanzen</h2>
                 <p>Die Pflanzen und der Garten, die unserer Mutter so viel bedeutet haben.</p>
+
+                
+                <video src="Blumenwiese.mp4" controls class="video-responsive" preload="metadata">
+                    Ihr Browser unterstützt das Video-Tag nicht. Hier ist ein <a href="Blumenwiese.mp4">Link zum Video</a> stattdessen.
+                </video>
+
                 <p>Ihr Garten war ihre Oase der Ruhe. Dort verbrachte sie viele Stunden damit, ihre Blumen zu pflegen und dem Gezwitscher der Vögel zu lauschen.</p>
                 <p>Besonders ihre Orchideen waren ihr Stolz. Sie hatte ein besonderes Händchen für diese anspruchsvollen Pflanzen und konnte selbst die schwierigsten Arten zum Blühen bringen.</p>
                 <div class="gallery">
@@ -268,21 +293,7 @@
 
             // --- DOM Element Caching ---
             const DOM = { /* ... (DOM elements as before) ... */
-                body: document.body,
-                header: document.querySelector('.main-header'),
-                themeToggleButton: document.getElementById('themeToggle'),
-                themeToggleIcon: document.getElementById('themeToggle')?.querySelector('i'),
-                adBanner: document.getElementById('ad-banner'),
-                textGlowElement: document.querySelector("#ad-banner .text-glow"),
-                cursorElement: document.querySelector("#ad-banner .cursor"),
-                cubeContainer: document.getElementById('cubeContainer'),
-                menuItems: document.querySelectorAll('.menu-item'),
-                contentPanels: document.querySelectorAll('.content-panel'),
-                galleryItems: document.querySelectorAll('.gallery-item'),
-                modal: document.getElementById('imageModal'),
-                modalImage: document.getElementById('modalImage'),
-                modalCaption: document.getElementById('modalCaption'),
-                modalCloseButton: document.getElementById('modalClose'),
+                body: document.body, header: document.querySelector('.main-header'), themeToggleButton: document.getElementById('themeToggle'), themeToggleIcon: document.getElementById('themeToggle')?.querySelector('i'), adBanner: document.getElementById('ad-banner'), textGlowElement: document.querySelector("#ad-banner .text-glow"), cursorElement: document.querySelector("#ad-banner .cursor"), cubeContainer: document.getElementById('cubeContainer'), menuItems: document.querySelectorAll('.menu-item'), contentPanels: document.querySelectorAll('.content-panel'), galleryItems: document.querySelectorAll('.gallery-item'), modal: document.getElementById('imageModal'), modalImage: document.getElementById('modalImage'), modalCaption: document.getElementById('modalCaption'), modalCloseButton: document.getElementById('modalClose'),
              };
 
             // --- Global Variables (Three.js) ---
@@ -290,62 +301,24 @@
             let cube, particles;
             let isAutoRotating = true;
             let animationFrameId;
-            let raycaster = new THREE.Raycaster(); // Initialize Raycaster
-            let mouse = new THREE.Vector2(); // Initialize mouse vector
-            let autoRotateTimeoutId = null; // Timeout ID for resuming rotation
+            let raycaster = new THREE.Raycaster();
+            let mouse = new THREE.Vector2();
+            let autoRotateTimeoutId = null;
 
             // --- Cube Images ---
             const images = [ /* ... (images array as before) ... */
-                { url: 'https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589', caption: 'Erinnerung an Mama auf der Terrasse' },
-                { url: 'https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635', caption: 'Gemeinsame Zeit auf dem Balkon' },
-                { url: 'https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609', caption: 'Im Krankenhaus' },
-                { url: 'https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2', caption: 'Zusammen auf der Terrasse' },
-                { url: 'https://i.imgur.com/UqYfUna.jpg', caption: 'Blumenwiese' },
-                { url: 'https://i.imgur.com/AkVQK3t.jpg', caption: 'Blumen' }
+                { url: 'https://pfst.cf2.poecdn.net/base/image/be7a24b55d2e44927cbdda76670b5d460b663df7e2b689630dd2410296ff9589', caption: 'Erinnerung an Mama auf der Terrasse' }, { url: 'https://pfst.cf2.poecdn.net/base/image/5b9ee48b9f802ecdef99a156c618a470a24e089d2cc2928e7f41e65bcb137635', caption: 'Gemeinsame Zeit auf dem Balkon' }, { url: 'https://pfst.cf2.poecdn.net/base/image/94c242d217d30ce70abc2dbafca7e5279a91d259286d41b08be5349ad57b9609', caption: 'Im Krankenhaus' }, { url: 'https://pfst.cf2.poecdn.net/base/image/e0f7b58e8f64ca801771e7a24c4d7ea18042372f73196884962abd85594edbd2', caption: 'Zusammen auf der Terrasse' }, { url: 'https://i.imgur.com/UqYfUna.jpg', caption: 'Blumenwiese' }, { url: 'https://i.imgur.com/AkVQK3t.jpg', caption: 'Blumen' }
              ];
 
             // --- Banner Typing Effect ---
             let currentTypewriterCancel = null;
             function typeWriter(textElement, cursorElement, text, speed = 50, eraseDelay = 3000) { /* ... (typewriter function as before) ... */
-                let charIndex = 0;
-                let timeoutId;
-                let isCancelled = false;
-                textElement.innerHTML = "";
-                cursorElement.style.display = "inline-block";
-                function typing() {
-                    if (isCancelled) return;
-                    if (charIndex < text.length) {
-                        textElement.innerHTML += text.charAt(charIndex);
-                        charIndex++;
-                        timeoutId = setTimeout(typing, speed);
-                    } else {
-                        timeoutId = setTimeout(eraseText, eraseDelay);
-                    }
-                }
-                function eraseText() {
-                    if (isCancelled) return;
-                    if (textElement.innerHTML.length > 0) {
-                        textElement.innerHTML = textElement.innerHTML.substring(0, textElement.innerHTML.length - 1);
-                        timeoutId = setTimeout(eraseText, speed / 1.5);
-                    } else {
-                        timeoutId = setTimeout(nextText, speed);
-                    }
-                }
-                typing();
-                return function cancel() {
-                    isCancelled = true;
-                    clearTimeout(timeoutId);
-                    cursorElement.style.display = "none";
-                };
+                let charIndex = 0; let timeoutId; let isCancelled = false; textElement.innerHTML = ""; cursorElement.style.display = "inline-block"; function typing() { if (isCancelled) return; if (charIndex < text.length) { textElement.innerHTML += text.charAt(charIndex); charIndex++; timeoutId = setTimeout(typing, speed); } else { timeoutId = setTimeout(eraseText, eraseDelay); } } function eraseText() { if (isCancelled) return; if (textElement.innerHTML.length > 0) { textElement.innerHTML = textElement.innerHTML.substring(0, textElement.innerHTML.length - 1); timeoutId = setTimeout(eraseText, speed / 1.5); } else { timeoutId = setTimeout(nextText, speed); } } typing(); return function cancel() { isCancelled = true; clearTimeout(timeoutId); cursorElement.style.display = "none"; };
              }
             const adMessages = [ "Du warst die beste Mutter und Oma aller Zeiten, wir werden dich nie vergessen!", "In unseren Herzen bleibst du für immer!", "Deine Liebe und Wärme begleiten uns jeden Tag!", "Wir denken in Liebe an dich!", "Danke für alles, was du uns gegeben hast!" ];
             let currentAdIndex = 0;
             function nextText() { /* ... (nextText function as before) ... */
-                if (currentTypewriterCancel) { currentTypewriterCancel(); }
-                currentAdIndex = (currentAdIndex + 1) % adMessages.length;
-                if (DOM.textGlowElement && DOM.cursorElement) {
-                    currentTypewriterCancel = typeWriter(DOM.textGlowElement, DOM.cursorElement, adMessages[currentAdIndex], 60, 4000);
-                }
+                if (currentTypewriterCancel) { currentTypewriterCancel(); } currentAdIndex = (currentAdIndex + 1) % adMessages.length; if (DOM.textGlowElement && DOM.cursorElement) { currentTypewriterCancel = typeWriter(DOM.textGlowElement, DOM.cursorElement, adMessages[currentAdIndex], 60, 4000); }
              }
 
              // --- Three.js Initialization ---
@@ -358,68 +331,31 @@
                 renderer.setSize(DOM.cubeContainer.clientWidth, DOM.cubeContainer.clientHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 DOM.cubeContainer.appendChild(renderer.domElement);
-                renderer.domElement.tabIndex = -1; // Make canvas focusable
-
+                renderer.domElement.tabIndex = -1;
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
-                controls.enableDamping = true;
-                controls.dampingFactor = 0.05;
-                controls.screenSpacePanning = false;
-                controls.minDistance = 5;
-                controls.maxDistance = 20;
-                controls.maxPolarAngle = Math.PI / 1.8;
-
-                // --- MODIFIED Rotation Control ---
-                // Stop auto-rotation on user interaction start
-                controls.addEventListener('start', () => {
-                    isAutoRotating = false;
-                    clearTimeout(autoRotateTimeoutId); // Clear any pending resume timeout
-                });
-                // Resume auto-rotation after a delay when interaction stops
-                controls.addEventListener('end', () => {
-                    resumeAutoRotationAfterDelay();
-                });
-                // --- End MODIFIED Rotation Control ---
-
-                setupLighting();
-                setupParticles();
-                createCube();
-                animate();
-
-                // --- ADDED Click Listener for Raycasting ---
+                controls.enableDamping = true; controls.dampingFactor = 0.05; controls.screenSpacePanning = false; controls.minDistance = 5; controls.maxDistance = 20; controls.maxPolarAngle = Math.PI / 1.8;
+                controls.addEventListener('start', () => { isAutoRotating = false; clearTimeout(autoRotateTimeoutId); });
+                controls.addEventListener('end', () => { resumeAutoRotationAfterDelay(); });
+                setupLighting(); setupParticles(); createCube(); animate();
                 renderer.domElement.addEventListener('click', onCanvasClick, false);
-
                 window.addEventListener('resize', onWindowResize);
             }
 
-            // --- ADDED Function to resume rotation ---
-            function resumeAutoRotationAfterDelay(delay = 3000) { // 3 second delay
-                 clearTimeout(autoRotateTimeoutId); // Clear previous timeout if any
-                 autoRotateTimeoutId = setTimeout(() => {
-                     isAutoRotating = true;
-                 }, delay);
+            function resumeAutoRotationAfterDelay(delay = 3000) {
+                 clearTimeout(autoRotateTimeoutId);
+                 autoRotateTimeoutId = setTimeout(() => { isAutoRotating = true; }, delay);
             }
 
-            // --- ADDED Click Handler with Raycasting ---
             function onCanvasClick(event) {
-                if (!cube || !camera || !renderer) return; // Ensure objects exist
-
-                // Calculate mouse position in normalized device coordinates (-1 to +1)
+                if (!cube || !camera || !renderer) return;
                 const rect = renderer.domElement.getBoundingClientRect();
                 mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
                 mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-                // Update the picking ray with the camera and mouse position
                 raycaster.setFromCamera(mouse, camera);
-
-                // Calculate objects intersecting the picking ray
                 const intersects = raycaster.intersectObject(cube);
-
                 if (intersects.length > 0) {
-                    // Check if a face was actually clicked (and has a materialIndex)
                     if (intersects[0].face && intersects[0].face.materialIndex !== undefined) {
                         const clickedMaterialIndex = intersects[0].face.materialIndex;
-
-                        // Ensure the index is valid for the images array
                         if (clickedMaterialIndex >= 0 && clickedMaterialIndex < images.length) {
                             const imageData = images[clickedMaterialIndex];
                             openModal(imageData.url, imageData.caption);
@@ -428,156 +364,48 @@
                 }
             }
 
-
             function setupLighting() { /* ... (lighting setup as before) ... */
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-                scene.add(ambientLight);
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-                directionalLight.position.set(5, 10, 7);
-                scene.add(directionalLight);
-                 const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
-                 hemiLight.position.set(0, 20, 0);
-                 scene.add(hemiLight);
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); scene.add(ambientLight); const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0); directionalLight.position.set(5, 10, 7); scene.add(directionalLight); const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6); hemiLight.position.set(0, 20, 0); scene.add(hemiLight);
              }
-
             function setupParticles() { /* ... (particle setup as before) ... */
-                const particlesGeometry = new THREE.BufferGeometry();
-                const particlesCnt = 6000;
-                const posArray = new Float32Array(particlesCnt * 3);
-                for (let i = 0; i < particlesCnt * 3; i++) { posArray[i] = (Math.random() - 0.5) * 80; }
-                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-                const particleMaterial = new THREE.PointsMaterial({ size: 0.06, color: 0xffc0cb, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true });
-                particles = new THREE.Points(particlesGeometry, particleMaterial);
-                particles.position.z = -10;
-                scene.add(particles);
+                const particlesGeometry = new THREE.BufferGeometry(); const particlesCnt = 6000; const posArray = new Float32Array(particlesCnt * 3); for (let i = 0; i < particlesCnt * 3; i++) { posArray[i] = (Math.random() - 0.5) * 80; } particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3)); const particleMaterial = new THREE.PointsMaterial({ size: 0.06, color: 0xffc0cb, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true }); particles = new THREE.Points(particlesGeometry, particleMaterial); particles.position.z = -10; scene.add(particles);
              }
-
             function createCube() { /* ... (cube creation as before) ... */
-                const geometry = new THREE.BoxGeometry(5, 5, 5);
-                const textureLoader = new THREE.TextureLoader();
-                const materials = [];
-                images.forEach(imgData => {
-                    const texture = textureLoader.load(imgData.url);
-                     texture.colorSpace = THREE.SRGBColorSpace;
-                    const material = new THREE.MeshStandardMaterial({ map: texture, metalness: 0.1, roughness: 0.7 });
-                    materials.push(material);
-                });
-                cube = new THREE.Mesh(geometry, materials);
-                scene.add(cube);
+                const geometry = new THREE.BoxGeometry(5, 5, 5); const textureLoader = new THREE.TextureLoader(); const materials = []; images.forEach(imgData => { const texture = textureLoader.load(imgData.url); texture.colorSpace = THREE.SRGBColorSpace; const material = new THREE.MeshStandardMaterial({ map: texture, metalness: 0.1, roughness: 0.7 }); materials.push(material); }); cube = new THREE.Mesh(geometry, materials); scene.add(cube);
              }
-
             function onWindowResize() { /* ... (resize handler as before) ... */
-                if (!DOM.cubeContainer || !camera || !renderer) return;
-                const width = DOM.cubeContainer.clientWidth;
-                const height = DOM.cubeContainer.clientHeight;
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-                renderer.setSize(width, height);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                if (!DOM.cubeContainer || !camera || !renderer) return; const width = DOM.cubeContainer.clientWidth; const height = DOM.cubeContainer.clientHeight; camera.aspect = width / height; camera.updateProjectionMatrix(); renderer.setSize(width, height); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
              }
-
-            function animate() { /* ... (animation loop as before, rotation logic unchanged) ... */
-                animationFrameId = requestAnimationFrame(animate);
-                if (particles) { particles.rotation.y += 0.0002; }
-                if (isAutoRotating && cube) {
-                    const rotationSpeedY = 0.002;
-                    cube.rotation.y += rotationSpeedY;
-                }
-                if (controls) { controls.update(); }
-                if (renderer && scene && camera) { renderer.render(scene, camera); }
+            function animate() { /* ... (animation loop as before) ... */
+                animationFrameId = requestAnimationFrame(animate); if (particles) { particles.rotation.y += 0.0002; } if (isAutoRotating && cube) { const rotationSpeedY = 0.002; cube.rotation.y += rotationSpeedY; } if (controls) { controls.update(); } if (renderer && scene && camera) { renderer.render(scene, camera); }
              }
 
             // --- UI Interaction Functions ---
             function showPanel(targetId) { /* ... (showPanel as before) ... */
-                DOM.contentPanels.forEach(panel => {
-                    panel.classList.remove('active');
-                    panel.setAttribute('aria-hidden', 'true');
-                });
-                const targetPanel = document.getElementById(`${targetId}-panel`);
-                if (targetPanel) {
-                    targetPanel.classList.add('active');
-                    targetPanel.setAttribute('aria-hidden', 'false');
-                }
+                DOM.contentPanels.forEach(panel => { panel.classList.remove('active'); panel.setAttribute('aria-hidden', 'true'); }); const targetPanel = document.getElementById(`${targetId}-panel`); if (targetPanel) { targetPanel.classList.add('active'); targetPanel.setAttribute('aria-hidden', 'false'); }
              }
-            function openModal(src, caption) { /* ... (openModal as before, including isAutoRotating = false) ... */
-                if (!DOM.modal || !DOM.modalImage || !DOM.modalCaption) return;
-                DOM.modalImage.src = src;
-                DOM.modalImage.alt = caption || "Bild in Vollansicht";
-                DOM.modalCaption.textContent = caption || '';
-                DOM.modal.classList.add('active');
-                DOM.modal.setAttribute('aria-hidden', 'false');
-                DOM.modalCloseButton?.focus();
-                 isAutoRotating = false; // Pause cube rotation when modal is open
-                 clearTimeout(autoRotateTimeoutId); // Prevent resuming rotation while modal is open
+            function openModal(src, caption) { /* ... (openModal as before) ... */
+                if (!DOM.modal || !DOM.modalImage || !DOM.modalCaption) return; DOM.modalImage.src = src; DOM.modalImage.alt = caption || "Bild in Vollansicht"; DOM.modalCaption.textContent = caption || ''; DOM.modal.classList.add('active'); DOM.modal.setAttribute('aria-hidden', 'false'); DOM.modalCloseButton?.focus(); isAutoRotating = false; clearTimeout(autoRotateTimeoutId);
              }
             function closeModal() { /* ... (closeModal as before) ... */
-                if (!DOM.modal) return;
-                DOM.modal.classList.remove('active');
-                DOM.modal.setAttribute('aria-hidden', 'true');
-                DOM.modalImage.src = "";
-                DOM.modalCaption.textContent = "";
-                const canvas = DOM.cubeContainer?.querySelector('canvas');
-                if (canvas) { canvas.focus(); }
-                // Rotation resumes via the 'end' event listener delay, no need to force it here
-                // resumeAutoRotationAfterDelay(); // Optional: uncomment to immediately try resuming rotation on close
+                if (!DOM.modal) return; DOM.modal.classList.remove('active'); DOM.modal.setAttribute('aria-hidden', 'true'); DOM.modalImage.src = ""; DOM.modalCaption.textContent = ""; const canvas = DOM.cubeContainer?.querySelector('canvas'); if (canvas) { canvas.focus(); }
              }
 
             // --- Event Listeners Setup ---
             function setupEventListeners() { /* ... (event listeners setup as before) ... */
-                // Theme Toggle
-                if (DOM.themeToggleButton) {
-                    DOM.themeToggleButton.addEventListener('click', () => {
-                        DOM.body.classList.toggle('dark-mode');
-                        const isDarkMode = DOM.body.classList.contains('dark-mode');
-                        if (DOM.themeToggleIcon) { DOM.themeToggleIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon'; }
-                        try { localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); } catch (e) { console.warn("Could not save theme preference."); }
-                    });
-                }
-                // Menu Item Clicks
+                if (DOM.themeToggleButton) { DOM.themeToggleButton.addEventListener('click', () => { DOM.body.classList.toggle('dark-mode'); const isDarkMode = DOM.body.classList.contains('dark-mode'); if (DOM.themeToggleIcon) { DOM.themeToggleIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon'; } try { localStorage.setItem('theme', isDarkMode ? 'dark' : 'light'); } catch (e) { console.warn("Could not save theme preference."); } }); }
                 DOM.menuItems.forEach(item => { item.addEventListener('click', function() { const target = this.getAttribute('data-target'); if (target) showPanel(target); }); });
-                // Gallery Item Clicks & Keyboard
-                DOM.galleryItems.forEach(item => {
-                    item.addEventListener('click', function() { const imageSrc = this.getAttribute('data-src'); const caption = this.getAttribute('data-caption'); if (imageSrc) openModal(imageSrc, caption); });
-                    item.addEventListener('keydown', function(event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); const imageSrc = this.getAttribute('data-src'); const caption = this.getAttribute('data-caption'); if (imageSrc) openModal(imageSrc, caption); } });
-                });
-                // Modal Close Button
+                DOM.galleryItems.forEach(item => { item.addEventListener('click', function() { const imageSrc = this.getAttribute('data-src'); const caption = this.getAttribute('data-caption'); if (imageSrc) openModal(imageSrc, caption); }); item.addEventListener('keydown', function(event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); const imageSrc = this.getAttribute('data-src'); const caption = this.getAttribute('data-caption'); if (imageSrc) openModal(imageSrc, caption); } }); });
                 if (DOM.modalCloseButton) { DOM.modalCloseButton.addEventListener('click', closeModal); }
-                // Modal Escape Key & Backdrop Click
-                if (DOM.modal) {
-                    DOM.modal.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); });
-                    DOM.modal.addEventListener('click', (event) => { if (event.target === DOM.modal) closeModal(); });
-                }
-                // Banner Hover Pause/Resume
-                if (DOM.adBanner && DOM.textGlowElement && DOM.cursorElement) {
-                    DOM.adBanner.addEventListener("mouseenter", () => { DOM.adBanner.style.animationPlayState = "paused"; DOM.textGlowElement.style.animationPlayState = "paused"; DOM.cursorElement.style.animationPlayState = "paused"; });
-                    DOM.adBanner.addEventListener("mouseleave", () => { DOM.adBanner.style.animationPlayState = "running"; DOM.textGlowElement.style.animationPlayState = "running"; DOM.cursorElement.style.animationPlayState = "running"; });
-                }
+                if (DOM.modal) { DOM.modal.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); }); DOM.modal.addEventListener('click', (event) => { if (event.target === DOM.modal) closeModal(); }); }
+                if (DOM.adBanner && DOM.textGlowElement && DOM.cursorElement) { DOM.adBanner.addEventListener("mouseenter", () => { DOM.adBanner.style.animationPlayState = "paused"; DOM.textGlowElement.style.animationPlayState = "paused"; DOM.cursorElement.style.animationPlayState = "paused"; }); DOM.adBanner.addEventListener("mouseleave", () => { DOM.adBanner.style.animationPlayState = "running"; DOM.textGlowElement.style.animationPlayState = "running"; DOM.cursorElement.style.animationPlayState = "running"; }); }
              }
 
             // --- Initialization ---
             function initializePage() { /* ... (initialization as before) ... */
-                 // Apply saved theme
-                 try {
-                     const savedTheme = localStorage.getItem('theme');
-                     if (savedTheme === 'dark') {
-                         DOM.body.classList.add('dark-mode');
-                         if (DOM.themeToggleIcon) DOM.themeToggleIcon.className = 'fas fa-sun';
-                     } else {
-                         DOM.body.classList.remove('dark-mode');
-                          if (DOM.themeToggleIcon) DOM.themeToggleIcon.className = 'fas fa-moon';
-                     }
-                 } catch(e) { console.warn("Could not load theme preference."); }
-
-                initCube();
-                setupEventListeners();
-                showPanel('leben');
-
-                // Start banner animation
-                if (DOM.textGlowElement && DOM.cursorElement) {
-                    currentTypewriterCancel = typeWriter(DOM.textGlowElement, DOM.cursorElement, adMessages[currentAdIndex], 60, 4000);
-                } else {
-                    console.warn("Banner text or cursor element not found.");
-                }
+                 try { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'dark') { DOM.body.classList.add('dark-mode'); if (DOM.themeToggleIcon) DOM.themeToggleIcon.className = 'fas fa-sun'; } else { DOM.body.classList.remove('dark-mode'); if (DOM.themeToggleIcon) DOM.themeToggleIcon.className = 'fas fa-moon'; } } catch(e) { console.warn("Could not load theme preference."); }
+                initCube(); setupEventListeners(); showPanel('leben');
+                if (DOM.textGlowElement && DOM.cursorElement) { currentTypewriterCancel = typeWriter(DOM.textGlowElement, DOM.cursorElement, adMessages[currentAdIndex], 60, 4000); } else { console.warn("Banner text or cursor element not found."); }
              }
 
             // --- Run Initialization on Load ---
